@@ -1,0 +1,335 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class OriginFeatureSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $definitions = [
+            'Amnésico' => [
+                ['item', 'Itens variados', 'Um ou mais itens somando até T$ 100.'],
+                ['status', 'Lembranças Graduais', 'Perícia e poder são definidos pelo mestre.', true],
+            ],
+            'Aristocrata' => [
+                ['item', 'Joia de família e traje da corte', null],
+                ['skill', 'Diplomacia', null],
+                ['skill', 'Enganação', null],
+                ['skill', 'Nobreza', null],
+                ['power', 'Comandar', null],
+                ['power', 'Sangue Azul', null],
+                ['status', 'Sangue Azul', 'Tem influência política e acesso facilitado a autoridades.', true],
+            ],
+            'Artista' => [
+                ['item', 'Kit de disfarces ou instrumento musical', null],
+                ['skill', 'Atuação', null],
+                ['skill', 'Enganação', null],
+                ['power', 'Atraente', null],
+                ['power', 'Dom Artístico', null],
+                ['power', 'Sortudo', null],
+                ['power', 'Torcida', null],
+                ['status', 'Dom Artístico', 'Ganha melhor rendimento em apresentações com Atuação.', true],
+            ],
+            'Batedor' => [
+                ['item', 'Barraca e arma de ataque a distância', null],
+                ['skill', 'Furtividade', null],
+                ['skill', 'Percepção', null],
+                ['skill', 'Sobrevivência', null],
+                ['power', 'À Prova de Tudo', null],
+                ['power', 'Estilo de Disparo', null],
+                ['power', 'Sentidos Aguçados', null],
+                ['status', 'À Prova de Tudo', 'Ignora penalidades comuns de clima ruim e terreno difícil natural.', true],
+            ],
+            'Capanga' => [
+                ['item', 'Adereço de gangue e arma simples corpo a corpo', null],
+                ['skill', 'Luta', null],
+                ['skill', 'Intimidação', null],
+                ['power', 'Confissão', null],
+                ['power', 'Poder de Combate', 'Escolhe um poder de combate.'],
+                ['status', 'Confissão', 'Pode usar Intimidação para obter informação.', true],
+            ],
+            'Charlatão' => [
+                ['item', 'Joia falsificada e kit de disfarces', null],
+                ['skill', 'Enganação', null],
+                ['skill', 'Jogatina', null],
+                ['power', 'Alpinista Social', null],
+                ['power', 'Aparência Inofensiva', null],
+                ['power', 'Sortudo', null],
+                ['status', 'Alpinista Social', 'Pode substituir Diplomacia por Enganação.', true],
+            ],
+            'Circense' => [
+                ['item', 'Traje, bolas de malabarismo e baralho', null],
+                ['skill', 'Acrobacia', null],
+                ['skill', 'Atuação', null],
+                ['skill', 'Reflexos', null],
+                ['power', 'Acrobático', null],
+                ['power', 'Torcida', null],
+                ['power', 'Truque de Mágica', null],
+                ['status', 'Truque de Mágica', 'Consegue reproduzir efeitos de truque usando prestidigitação.', true],
+            ],
+            'Criminoso' => [
+                ['item', 'Kit de ladrão ou kit de disfarces', null],
+                ['skill', 'Enganação', null],
+                ['skill', 'Furtividade', null],
+                ['skill', 'Ladinagem', null],
+                ['power', 'Punguista', null],
+                ['power', 'Venefício', null],
+                ['status', 'Punguista', 'Pode usar Ladinagem para sustento.', true],
+            ],
+            'Curandeiro' => [
+                ['item', 'Bálsamo restaurador e kit de medicamentos', null],
+                ['skill', 'Cura', null],
+                ['skill', 'Vontade', null],
+                ['power', 'Medicina', null],
+                ['power', 'Médico de Campo', null],
+                ['power', 'Venefício', null],
+                ['status', 'Médico de Campo', 'Melhora primeiros socorros em aliados críticos.', true],
+            ],
+            'Eremita' => [
+                ['item', 'Barraca e kit de medicamentos', null],
+                ['skill', 'Misticismo', null],
+                ['skill', 'Religião', null],
+                ['skill', 'Sobrevivência', null],
+                ['power', 'Busca Interior', null],
+                ['power', 'Lobo Solitário', null],
+                ['status', 'Busca Interior', 'Pode meditar para receber dica do mestre ao custo de PM.', true],
+            ],
+            'Escravo' => [
+                ['item', 'Algemas e ferramenta pesada', null],
+                ['skill', 'Atletismo', null],
+                ['skill', 'Fortitude', null],
+                ['skill', 'Furtividade', null],
+                ['skill', 'Vontade', null],
+                ['power', 'Desejo de Liberdade', null],
+                ['power', 'Vitalidade', null],
+                ['status', 'Desejo de Liberdade', 'Recebe bônus contra efeitos de aprisionamento.', true],
+            ],
+            'Estudioso' => [
+                ['item', 'Livro aprimorado e livros comuns', null],
+                ['skill', 'Conhecimento', null],
+                ['skill', 'Guerra', null],
+                ['skill', 'Misticismo', null],
+                ['power', 'Aparência Inofensiva', null],
+                ['power', 'Palpite Fundamentado', null],
+                ['status', 'Palpite Fundamentado', 'Pode substituir certos testes por Conhecimento ao custo de PM.', true],
+            ],
+            'Fazendeiro' => [
+                ['item', 'Ferramenta agrícola, rações e animal não combativo', null],
+                ['skill', 'Adestramento', null],
+                ['skill', 'Cavalgar', null],
+                ['skill', 'Ofício (fazendeiro)', null],
+                ['skill', 'Sobrevivência', null],
+                ['power', 'Água no Feijão', null],
+                ['power', 'Ginete', null],
+                ['status', 'Água no Feijão', 'Reduz custo de matéria-prima para preparo de comida.', true],
+            ],
+            'Forasteiro' => [
+                ['item', 'Diário de viagens, traje estrangeiro e instrumento exótico', null],
+                ['skill', 'Cavalgar', null],
+                ['skill', 'Pilotagem', null],
+                ['skill', 'Sobrevivência', null],
+                ['power', 'Cultura Exótica', null],
+                ['power', 'Lobo Solitário', null],
+                ['status', 'Cultura Exótica', 'Pode improvisar perícia treinada gastando PM.', true],
+            ],
+            'Gladiador' => [
+                ['item', 'Arma marcial ou exótica e lembrança de admirador', null],
+                ['skill', 'Atuação', null],
+                ['skill', 'Luta', null],
+                ['power', 'Atraente', null],
+                ['power', 'Pão e Circo', null],
+                ['power', 'Torcida', null],
+                ['power', 'Poder de Combate', 'Escolhe um poder de combate.'],
+                ['status', 'Pão e Circo', 'Pode causar dano não letal sem penalidade.', true],
+            ],
+            'Guarda' => [
+                ['item', 'Apito, insígnia e arma marcial', null],
+                ['skill', 'Investigação', null],
+                ['skill', 'Luta', null],
+                ['skill', 'Percepção', null],
+                ['power', 'Detetive', null],
+                ['power', 'Investigador', null],
+                ['power', 'Poder de Combate', 'Escolhe um poder de combate.'],
+                ['status', 'Detetive', 'Pode trocar Percepção/Intuição por Investigação em cena.', true],
+            ],
+            'Herdeiro' => [
+                ['item', 'Símbolo da herança familiar', null],
+                ['skill', 'Misticismo', null],
+                ['skill', 'Nobreza', null],
+                ['skill', 'Ofício (qualquer)', null],
+                ['power', 'Comandar', null],
+                ['power', 'Herança', null],
+                ['power', 'Sangue Azul', null],
+                ['power', 'Sortudo', null],
+                ['status', 'Herança', 'Recebe item valioso de acordo com o poder escolhido.', true],
+            ],
+            'Herói Camponês' => [
+                ['item', 'Kit de Ofício ou arma simples, traje de plebeu', null],
+                ['skill', 'Adestramento', null],
+                ['skill', 'Ofício (qualquer)', null],
+                ['power', 'Coração Heroico', null],
+                ['power', 'Sortudo', null],
+                ['power', 'Surto Heroico', null],
+                ['power', 'Torcida', null],
+                ['status', 'Coração Heroico', 'Recebe PM extras por patamar.', true],
+            ],
+            'Marujo' => [
+                ['item', 'T$ 2d6 e corda', null],
+                ['skill', 'Atletismo', null],
+                ['skill', 'Jogatina', null],
+                ['skill', 'Ofício (marinheiro)', null],
+                ['skill', 'Pilotagem', null],
+                ['power', 'Acrobático', null],
+                ['power', 'Passagem de Navio', null],
+                ['status', 'Passagem de Navio', 'Consegue transporte marítimo por trabalho.', true],
+            ],
+            'Mateiro' => [
+                ['item', 'Barraca, arco curto e 20 flechas', null],
+                ['skill', 'Atletismo', null],
+                ['skill', 'Furtividade', null],
+                ['skill', 'Sobrevivência', null],
+                ['power', 'Lobo Solitário', null],
+                ['power', 'Sentidos Aguçados', null],
+                ['power', 'Vendedor de Carcaças', null],
+                ['status', 'Vendedor de Carcaças', 'Extrai recursos de criaturas com mais rapidez.', true],
+            ],
+            'Membro de Guilda' => [
+                ['item', 'Kit de ladrão ou kit de Ofício', null],
+                ['skill', 'Diplomacia', null],
+                ['skill', 'Enganação', null],
+                ['skill', 'Misticismo', null],
+                ['skill', 'Ofício (qualquer)', null],
+                ['power', 'Foco em Perícia', null],
+                ['power', 'Rede de Contatos', null],
+                ['status', 'Rede de Contatos', 'Pode obter informação com Diplomacia sem custo.', true],
+            ],
+            'Mercador' => [
+                ['item', 'Carroça, trobo e mercadorias (T$ 100)', null],
+                ['skill', 'Diplomacia', null],
+                ['skill', 'Intuição', null],
+                ['skill', 'Ofício (qualquer)', null],
+                ['power', 'Negociação', null],
+                ['power', 'Proficiência', null],
+                ['power', 'Sortudo', null],
+                ['status', 'Negociação', 'Vende itens por valor melhorado.', true],
+            ],
+            'Minerador' => [
+                ['item', 'Gemas (T$ 100) e picareta', null],
+                ['skill', 'Atletismo', null],
+                ['skill', 'Fortitude', null],
+                ['skill', 'Ofício (minerador)', null],
+                ['power', 'Ataque Poderoso', null],
+                ['power', 'Escavador', null],
+                ['power', 'Sentidos Aguçados', null],
+                ['status', 'Escavador', 'Ganha proficiência com picareta e mobilidade em subterrâneos.', true],
+            ],
+            'Nômade' => [
+                ['item', 'Bordão e bússola', null],
+                ['skill', 'Cavalgar', null],
+                ['skill', 'Pilotagem', null],
+                ['skill', 'Sobrevivência', null],
+                ['power', 'Lobo Solitário', null],
+                ['power', 'Mochileiro', null],
+                ['power', 'Sentidos Aguçados', null],
+                ['status', 'Mochileiro', 'Ignora penalidades de carga pesada.', true],
+            ],
+            'Pivete' => [
+                ['item', 'Kit de ladrão, traje de plebeu e animal urbano', null],
+                ['skill', 'Furtividade', null],
+                ['skill', 'Iniciativa', null],
+                ['skill', 'Ladinagem', null],
+                ['power', 'Acrobático', null],
+                ['power', 'Aparência Inofensiva', null],
+                ['power', 'Quebra-Galho', null],
+                ['status', 'Quebra-Galho', 'Compra itens mundanos comuns por preço reduzido em cidades.', true],
+            ],
+            'Refugiado' => [
+                ['item', 'Item estrangeiro de até T$ 100', null],
+                ['skill', 'Fortitude', null],
+                ['skill', 'Reflexos', null],
+                ['skill', 'Vontade', null],
+                ['power', 'Estoico', null],
+                ['power', 'Vontade de Ferro', null],
+                ['status', 'Estoico', 'Melhora recuperação em descansos.', true],
+            ],
+            'Seguidor' => [
+                ['item', 'Item de até T$ 100 recebido do mestre', null],
+                ['skill', 'Adestramento', null],
+                ['skill', 'Ofício (qualquer)', null],
+                ['power', 'Antigo Mestre', null],
+                ['power', 'Proficiência', null],
+                ['power', 'Surto Heroico', null],
+                ['status', 'Antigo Mestre', 'Pode receber ajuda situacional de seu antigo mentor.', true],
+            ],
+            'Selvagem' => [
+                ['item', 'Arma simples e pequeno animal de estimação', null],
+                ['skill', 'Percepção', null],
+                ['skill', 'Reflexos', null],
+                ['skill', 'Sobrevivência', null],
+                ['power', 'Lobo Solitário', null],
+                ['power', 'Vida Rústica', null],
+                ['power', 'Vitalidade', null],
+                ['status', 'Vida Rústica', 'Descansa bem em ambientes hostis e tolera alimentos extremos.', true],
+            ],
+            'Soldado' => [
+                ['item', 'Arma marcial, uniforme e insígnia militar', null],
+                ['skill', 'Fortitude', null],
+                ['skill', 'Guerra', null],
+                ['skill', 'Luta', null],
+                ['skill', 'Pontaria', null],
+                ['power', 'Influência Militar', null],
+                ['power', 'Poder de Combate', 'Escolhe um poder de combate.'],
+                ['status', 'Influência Militar', 'Consegue suporte em bases e acampamentos militares.', true],
+            ],
+            'Taverneiro' => [
+                ['item', 'Utensílios de taverna e ferramenta de cozinha', null],
+                ['skill', 'Diplomacia', null],
+                ['skill', 'Jogatina', null],
+                ['skill', 'Ofício (culinária)', null],
+                ['power', 'Gororoba', null],
+                ['power', 'Proficiência', null],
+                ['power', 'Vitalidade', null],
+                ['status', 'Gororoba', 'Prepara comidas especiais em menos tempo.', true],
+            ],
+            'Trabalhador' => [
+                ['item', 'Ferramenta pesada', null],
+                ['skill', 'Atletismo', null],
+                ['skill', 'Fortitude', null],
+                ['power', 'Atlético', null],
+                ['power', 'Esforçado', null],
+                ['status', 'Esforçado', 'Recebe bônus em testes estendidos.', true],
+            ],
+        ];
+
+        $rows = [];
+
+        foreach ($definitions as $originName => $features) {
+            $originId = DB::table('origins')->where('name', $originName)->value('id');
+
+            if (!$originId) {
+                continue;
+            }
+
+            foreach ($features as $index => $feature) {
+                $rows[] = [
+                    'origin_id' => $originId,
+                    'category' => $feature[0],
+                    'name' => $feature[1],
+                    'description' => $feature[2] ?? null,
+                    'is_unique' => $feature[3] ?? false,
+                    'sort_order' => $index,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+        }
+
+        DB::table('origin_features')->insert($rows);
+    }
+}
