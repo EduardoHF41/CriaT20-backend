@@ -5,8 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCharacterRequest;
 use App\Models\CharacterClass;
+use App\Models\Deity;
+use App\Models\ItemCatalog;
 use App\Models\Origin;
+use App\Models\Power;
 use App\Models\Race;
+use App\Models\Skill;
+use App\Models\Spell;
+use App\Models\WeaponCatalog;
 use App\Services\CharacterCreationService;
 use Illuminate\Http\JsonResponse;
 
@@ -42,6 +48,13 @@ class CharacterCreationController extends Controller
             'races' => Race::query()->orderBy('name')->get(),
             'classes' => CharacterClass::query()->orderBy('name')->get(),
             'origins' => Origin::query()->with('features')->orderBy('name')->get(),
+            'deities' => Deity::query()->orderBy('name')->get(),
+            'skills' => Skill::query()->orderBy('name')->get(),
+            'weapons' => WeaponCatalog::query()->orderBy('category')->orderBy('name')->get(),
+            'powers' => Power::query()->whereIn('type', ['geral', 'tormenta'])
+                ->orderBy('type')->orderBy('category')->orderBy('name')->get(),
+            'spells' => Spell::query()->orderBy('tradition')->orderBy('circle')->orderBy('name')->get(),
+            'items' => ItemCatalog::query()->orderBy('type')->orderBy('name')->get(),
         ]);
     }
 

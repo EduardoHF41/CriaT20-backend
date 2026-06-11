@@ -21,17 +21,22 @@ class DatabaseSeeder extends Seeder
         );
 
         // Limpa e repopula as tabelas de referência para evitar duplicatas
-        \Illuminate\Support\Facades\DB::table('origin_features')->delete();
-        \Illuminate\Support\Facades\DB::table('origins')->delete();
-        \Illuminate\Support\Facades\DB::table('character_classes')->delete();
-        \Illuminate\Support\Facades\DB::table('races')->delete();
+        // Usa TRUNCATE CASCADE para limpar tudo incluindo personagens dependentes
+        \Illuminate\Support\Facades\DB::statement('TRUNCATE TABLE origin_features, origins, characters, character_classes, races, skills, weapons_catalog, powers, spells, items_catalog RESTART IDENTITY CASCADE');
 
         $this->call([
             RaceSeeder::class,
             ClassSeeder::class,
             ClassPowersSeeder::class,
+            ClassSkillsSeeder::class,
+            SkillSeeder::class,
+            WeaponCatalogSeeder::class,
+            PowerSeeder::class,
+            SpellSeeder::class,
+            ItemCatalogSeeder::class,
             OriginSeeder::class,
             OriginFeatureSeeder::class,
+            DeitySeeder::class,
         ]);
     }
 }

@@ -9,16 +9,10 @@ class RaceSeeder extends Seeder
 {
     public function run(): void
     {
-        // Estrutura de attribute_modifiers:
-        // fixed   → modificadores fixos { "strength": 2, "constitution": 1, "wisdom": -1 }
-        // flexible → jogador escolhe quais atributos recebem bônus
-        //            { "count": 3, "value": 1, "exclude": [] }
-        // subtypes → duas sub-raças com modificadores distintos (Suraggel)
-
         DB::table('races')->insert([
             [
                 'name' => 'Humano',
-                'description' => 'A raça mais numerosa e versátil de Arton. Adaptáveis e ambiciosos, humanos prosperam em qualquer ambiente ou profissão. Sua diversidade faz com que sejam encontrados em todos os reinos.',
+                'description' => 'A raça mais numerosa e versátil de Arton. Adaptáveis e ambiciosos, humanos prosperam em qualquer ambiente ou profissão. Habilidades raciais: Teimosia (pode continuar agindo quando reduzido a 0 PV uma vez por cena), Versátil (+1 PM e +1 ponto de perícia por nível), Determinação (uma vez por cena, pode rolar novamente um teste com desvantagem).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => [],
                     'flexible' => ['count' => 3, 'value' => 1, 'exclude' => []],
@@ -26,7 +20,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Anão',
-                'description' => 'Povo resistente e determinado, famoso por artesanato, mineração e combate. Vivem principalmente em cidades subterrâneas e possuem forte tradição cultural. Sua constituição robusta os torna difíceis de derrubar em batalha.',
+                'description' => 'Povo resistente e determinado, famoso por artesanato, mineração e combate em cidades subterrâneas. Habilidades raciais: Conhecimento das Rochas (+2 em Percepção e Sobrevivência subterrâneas), Devagar e Sempre (deslocamento de 9m não reduzido por armadura), Duro como Pedra (+3 PV por nível), Tradição de Herdronm (+2 em ataques com machados, martelos e picaretas).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['constitution' => 2, 'wisdom' => 1, 'dexterity' => -1],
                     'flexible' => null,
@@ -34,7 +28,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Dahllan',
-                'description' => 'Descendentes de espíritos da natureza com forte ligação com florestas e plantas. Muitas vezes parecem parcialmente vegetais, refletindo sua origem ligada à deusa Allihanna. Defendem o equilíbrio natural.',
+                'description' => 'Descendentes de espíritos da natureza ligados à deusa Allihanna, com aparência parcialmente vegetal. Habilidades raciais: Amiga das Plantas (pode lançar Controlar Plantas por 1 PM), Armadura de Allihanna (+2 Defesa na forma arbórea/vegetal), Empatia Selvagem (comunica-se com plantas e animais nativos).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['wisdom' => 2, 'dexterity' => 1, 'intelligence' => -1],
                     'flexible' => null,
@@ -42,7 +36,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Elfo',
-                'description' => 'Seres longevos e graciosos com afinidade com magia e natureza. Possuem grande intelecto e agilidade, vivendo por séculos e acumulando conhecimento. Mantêm tradições antigas e forte ligação com o mundo natural.',
+                'description' => 'Seres longevos e graciosos com afinidade com magia e natureza, vivendo por séculos. Habilidades raciais: Graça de Glórienm (deslocamento 12m), Sangue Mágico (+1 PM por nível), Sentidos Élficos (+2 em Misticismo e Percepção).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['intelligence' => 2, 'dexterity' => 1, 'constitution' => -1],
                     'flexible' => null,
@@ -50,7 +44,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Goblin',
-                'description' => 'Pequenos, rápidos e extremamente engenhosos. Embora muitas vezes vistos como trapaceiros, também são inventores talentosos e sobreviventes habilidosos. Sua inteligência prática os torna úteis em diversas situações.',
+                'description' => 'Pequenos humanoides ágeis e engenhosos, inventores talentosos e sobreviventes habilidosos. Habilidades raciais: Engenhoso (sem penalidades com ferramentas improvisadas), Espelunqueiro (visão no escuro até seu deslocamento, trepa igual ao deslocamento), Pequenino (tamanho Pequeno, ocupa espaço 1,5m).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['dexterity' => 2, 'intelligence' => 1, 'charisma' => -1],
                     'flexible' => null,
@@ -58,7 +52,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Lefou',
-                'description' => 'Indivíduos marcados pela influência da Tormenta, uma força caótica e alienígena. Seu corpo frequentemente apresenta mutações estranhas. Por causa dessa origem, são temidos e discriminados em muitos lugares de Arton.',
+                'description' => 'Indivíduos marcados pela Tormenta, com mutações físicas estranhas. Temidos e discriminados, sua origem caótica também lhes confere poderes incomuns. Habilidades raciais: Cria da Tormenta (tipo monstro, +5 em resistência a efeitos da Tormenta), Deformidade (cada deficiência física concede vantagem relacionada).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['charisma' => -1],
                     'flexible' => ['count' => 3, 'value' => 1, 'exclude' => ['charisma']],
@@ -66,7 +60,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Minotauro',
-                'description' => 'Humanoides bovinos conhecidos por força e orgulho. Sua cultura valoriza combate, honra e conquistas pessoais. Muitos vêm do Império de Tauron e possuem tradição militar e marcial.',
+                'description' => 'Humanoides bovinos de cultura marcial e grande orgulho, vindos do Império de Tauron. Habilidades raciais: Chifres (arma natural 1d6, crítico x2; pode gastar 1 PM em carga para dano extra), Faro (+2 Percepção baseada em olfato, rastreia por cheiro), Corpulento (tamanho Grande, ocupa espaço 3m).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['strength' => 2, 'constitution' => 1, 'wisdom' => -1],
                     'flexible' => null,
@@ -74,7 +68,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Qareen',
-                'description' => 'Descendentes de gênios elementais com forte talento para magia. Seu sangue mágico lhes concede habilidades sobrenaturais e carisma natural. Frequentemente ligados a histórias de desejos, pactos e mistérios arcanos.',
+                'description' => 'Descendentes de gênios elementais com talento mágico e carisma natural, ligados a pactos e desejos. Habilidades raciais: Derejos (ao lançar magia de dano, pode gastar +2 PM para mudar o tipo de dano), Resistência Elemental (escolha um elemento; redução de dano 5 contra ele), Tatuagem Mística (+1 círculo numa magia por cena).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['charisma' => 2, 'intelligence' => 1, 'wisdom' => -1],
                     'flexible' => null,
@@ -82,7 +76,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Golem',
-                'description' => 'Construtos artificiais criados por magia ou alquimia. Apesar de serem feitos de pedra, metal ou outros elementos, possuem consciência própria. Cada golem tem uma origem única ligada ao propósito para o qual foi criado.',
+                'description' => 'Construtos artificiais criados por magia com consciência própria. Cada golem tem propósito único de origem. Habilidades raciais: Chassis (corpo é armadura; sem bônus de Def mas sem limite de itens equipados), Criatura Artificial (imune a venenos, doenças, sono; não precisa respirar), Propósito de Criação (+2 em perícia ligada ao seu propósito original), Fonte Elemental (escolha elemento; +1 dano desse tipo).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['strength' => 2, 'constitution' => 1, 'charisma' => -1],
                     'flexible' => null,
@@ -90,7 +84,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Hynne',
-                'description' => 'Pequenos humanoides alegres e sociáveis, também chamados halflings. Conhecidos por bom humor e hospitalidade, apreciam boa comida, histórias e companhia. Apesar da aparência inocente, podem ser surpreendentemente corajosos.',
+                'description' => 'Pequenos humanoides alegres e corajosos, também chamados halflings. Apreciam boa comida, histórias e companhia. Habilidades raciais: Fortitude Hynne (uma vez por cena, quando seria reduzido a 0 PV, fica com 1 PV), Pequenino (tamanho Pequeno, deslocamento 6m), Sorte Inata (pode rolar novamente um teste de resistência uma vez por cena).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['dexterity' => 2, 'charisma' => 1, 'strength' => -1],
                     'flexible' => null,
@@ -98,7 +92,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Kliren',
-                'description' => 'Povo extremamente inteligente e curioso, com grande talento para ciência e magia. Costumam ser estudiosos, inventores ou pesquisadores. Sua cultura valoriza conhecimento, lógica e descobertas.',
+                'description' => 'Povo extremamente inteligente e curioso, com talento para ciência e magia. Valorizam conhecimento, lógica e descobertas. Habilidades raciais: Arremessador (+2 em ataques com armas de arremesso), Engenhosidade (pode criar dispositivo simples de uma lista em ação padrão), Sorte Salvadora (uma vez por cena, +5 num teste de resistência), Vanguardista (+2 Iniciativa).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['intelligence' => 2, 'charisma' => 1, 'strength' => -1],
                     'flexible' => null,
@@ -106,7 +100,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Medusa',
-                'description' => 'Criaturas humanoides com serpentes no lugar dos cabelos e olhar petrificante. Muitas vivem isoladas ou em sociedades próprias. Apesar da aparência assustadora, algumas tentam viver entre outras raças.',
+                'description' => 'Humanoides com serpentes no lugar dos cabelos e olhar petrificante. Algumas tentam viver entre outras raças. Habilidades raciais: Olhar Petrificante (ação padrão; alvo vê sua face e testa Fortitude ou fica lento por 1 rodada), Mordida de Serpente (arma natural 1d4+veneno), Visão no Escuro (enxerga no escuro completo até 9m).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['dexterity' => 2, 'intelligence' => 1, 'charisma' => -1],
                     'flexible' => null,
@@ -114,7 +108,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Osteon',
-                'description' => 'Mortos-vivos conscientes formados por esqueletos animados. Mesmo após a morte, mantêm lembranças fragmentadas de sua vida anterior. Sua existência desafia as fronteiras entre vida e morte.',
+                'description' => 'Mortos-vivos conscientes com lembranças fragmentadas da vida anterior. Desafiam a fronteira entre vida e morte. Habilidades raciais: Armadura Óssea (+2 Defesa natural), Memória Póstuma (conhecimento de sua vida anterior; +2 em uma perícia aleatória por cena), Natureza Esquelética (imune a doenças, venenos, necessidades físicas; não se cura magias de cura comuns).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['constitution' => -1],
                     'flexible' => ['count' => 3, 'value' => 1, 'exclude' => ['constitution']],
@@ -122,7 +116,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Sereia/Tritão',
-                'description' => 'De torso humanoide e corpo de peixe, podem adorar forma bípede para caminhar em terra. Enquanto algumas sereias tendem a ver outras raças com curiosidade, o comum é encontrá-las como aventureiras nos reinos aquáticos.',
+                'description' => 'De torso humanoide e cauda de peixe, podem assumir forma bípede em terra. Vivem nos mares e rios de Arton. Habilidades raciais: Anfíbio (respira sob a água; deslocamento nado igual ao terrestre), Canção das Profundezas (pode lançar Fascínio por 1 PM), Filho das Águas (+2 Atletismo aquático, +1 dano com armas aquáticas).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => [],
                     'flexible' => ['count' => 3, 'value' => 1, 'exclude' => []],
@@ -130,15 +124,15 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Sílfide',
-                'description' => 'Pequenas criaturas aladas ligadas à magia e à liberdade. Leves e etéreas, possuem asas e capacidade natural de voo. Sua personalidade costuma ser curiosa e brincalhona.',
+                'description' => 'Pequenas criaturas aladas ligadas à magia feérica, etéreas e curiosas. Habilidades raciais: Asas de Borboleta (tamanho Pequeno; voo 12m, manobralidade média), Espírito da Natureza (+2 Misticismo e Percepção em ambientes naturais), Magia das Fadas (pode lançar Luz e Ilusão Fantasmagórica por 1 PM cada).',
                 'attribute_modifiers' => json_encode([
-                    'fixed'    => ['charisma' => 2, 'dexterity' => 1, 'strength' => -3],
+                    'fixed'    => ['charisma' => 2, 'dexterity' => 1, 'strength' => -2],
                     'flexible' => null,
                 ]),
             ],
             [
                 'name' => 'Suraggel',
-                'description' => 'Descendentes de entidades celestiais (aggelus) ou infernais (sulfure). Existem dois tipos com poderes distintos. Seu sangue sobrenatural lhes concede habilidades incomuns e aparência marcante.',
+                'description' => 'Descendentes de entidades celestiais (aggelus) ou infernais (sulfure). Dois subtipos com poderes distintos. Habilidades raciais: Herança Divina (aggelus: canaliza energia positiva; sulfure: energia negativa), Luz Sagrada/Sombras Profanas (aggelus: +1d6 dano radiante 1x/cena; sulfure: +1d6 dano necrótico 1x/cena), Voo (deslocamento aéreo 9m).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => null,
                     'flexible' => null,
@@ -150,7 +144,7 @@ class RaceSeeder extends Seeder
             ],
             [
                 'name' => 'Trog',
-                'description' => 'Humanoides reptilianos (trogloditas) que vivem em cavernas e regiões subterrâneas. Possuem sentidos aguçados e grande resistência. Muitas tribos são ferozes e territoriais, mas alguns buscam caminhos além de sua cultura.',
+                'description' => 'Humanoides reptilianos (trogloditas) de cavernas com sentidos aguçados. Muitas tribos são territoriais e ferozes. Habilidades raciais: Mau Cheiro (aura 1,5m; criaturas sem imunidade testam Fortitude ou ficam enjoadas), Mordida (arma natural 1d6, crítico x2), Reptiliano (+1 Defesa natural por escamas), Sangue Frio (+1 de dano por dado de dano de frio).',
                 'attribute_modifiers' => json_encode([
                     'fixed'    => ['constitution' => 2, 'strength' => 1, 'intelligence' => -1],
                     'flexible' => null,

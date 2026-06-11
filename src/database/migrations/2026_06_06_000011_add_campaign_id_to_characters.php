@@ -1,0 +1,26 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Campanha a que a ficha pertence (atribuída pelo dono do personagem).
+     */
+    public function up(): void
+    {
+        Schema::table('characters', function (Blueprint $table) {
+            $table->foreignId('campaign_id')->nullable()->after('user_id')
+                ->constrained('campaigns')->nullOnDelete();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('characters', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('campaign_id');
+        });
+    }
+};

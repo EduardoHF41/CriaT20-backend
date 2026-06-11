@@ -1,0 +1,134 @@
+erDiagram
+    USERS ||--o{ CHARACTERS : "possui"
+    USERS ||--o{ SESSIONS : "abre"
+    USERS ||--o{ PERSONAL_ACCESS_TOKENS : "autentica (morph)"
+
+    RACES ||--o{ CHARACTERS : "define raça de"
+    CHARACTER_CLASSES ||--o{ CHARACTERS : "define classe de"
+    ORIGINS ||--o{ CHARACTERS : "define origem de"
+    ORIGINS ||--o{ ORIGIN_FEATURES : "agrupa"
+
+    USERS {
+        bigint id PK
+        string name
+        string email UK
+        timestamp email_verified_at
+        string password
+        string remember_token
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PASSWORD_RESET_TOKENS {
+        string email PK
+        string token
+        timestamp created_at
+    }
+
+    SESSIONS {
+        string id PK
+        bigint user_id FK
+        string ip_address
+        text user_agent
+        longtext payload
+        int last_activity
+    }
+
+    PERSONAL_ACCESS_TOKENS {
+        bigint id PK
+        string tokenable_type
+        bigint tokenable_id
+        string name
+        string token UK
+        text abilities
+        timestamp last_used_at
+        timestamp expires_at
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    RACES {
+        bigint id PK
+        string name
+        text description
+        json attribute_modifiers
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    CHARACTER_CLASSES {
+        bigint id PK
+        string name
+        text description
+        smallint hp_per_level
+        smallint mp_per_level
+        string key_attribute
+        string initial_skills
+        json available_powers
+        tinyint powers_at_creation
+        boolean is_spellcaster
+        string spell_school
+        json available_spells
+        tinyint initial_spells
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    ORIGINS {
+        bigint id PK
+        string name
+        text description
+        text origin_trait
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    ORIGIN_FEATURES {
+        bigint id PK
+        bigint origin_id FK
+        enum category "item|skill|power|status"
+        string name
+        text description
+        boolean is_unique
+        smallint sort_order
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    CHARACTERS {
+        bigint id PK
+        bigint user_id FK
+        bigint race_id FK
+        bigint class_id FK
+        bigint origin_id FK "nullable"
+        string name
+        string avatar_url
+        int level
+        string deity
+        text concept
+        enum attribute_method "point_buy|rolled"
+        tinyint strength
+        tinyint dexterity
+        tinyint constitution
+        tinyint intelligence
+        tinyint wisdom
+        tinyint charisma
+        json origin_benefits
+        json trained_skills
+        json powers
+        json equipment
+        json weapons
+        json spells
+        int max_hp
+        int max_mp
+        smallint current_hp
+        smallint current_mp
+        int defense
+        string size
+        string displacement
+        smallint money_gold
+        smallint money_silver
+        smallint money_copper
+        timestamp created_at
+        timestamp updated_at
+    }

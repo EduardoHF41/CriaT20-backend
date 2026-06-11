@@ -102,7 +102,7 @@ class ClassSeeder extends Seeder
                 'hp_per_level'   => 12,
                 'mp_per_level'   => 4,
                 'key_attribute'  => 'Destreza ou Carisma',
-                'initial_skills' => 'Ladragem e Reflexos, mais 8',
+                'initial_skills' => 'Ladinagem e Reflexos, mais 8',
             ],
             [
                 'name'           => 'Lutador',
