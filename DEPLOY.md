@@ -34,6 +34,9 @@ A ordem importa por causa das URLs que um serviço precisa do outro:
    | `DB_URL`        | (connection string do Neon, com `?sslmode=require`) |
    | `FRONTEND_URL`  | deixe vazio por enquanto — preenche no passo 4 |
 
+> Região: o `render.yaml` usa **virginia** (o free não tem São Paulo), que é a mais
+> próxima do Neon em `sa-east-1`. Haverá alguma latência banco↔backend — inevitável no free.
+
 4. **Create / Deploy.** O primeiro build leva alguns minutos. Quando ficar **Live**, teste:
    ```
    https://criat20-backend.onrender.com/up   → deve responder "ok" (health check)

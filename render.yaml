@@ -6,7 +6,7 @@ services:
     runtime: docker
     dockerfilePath: ./Dockerfile.prod
     plan: free
-    region: oregon            # use a mesma região do projeto Neon
+    region: virginia          # mais próxima do Neon sa-east-1 (free não tem SP)
     healthCheckPath: /up
     envVars:
       - key: APP_NAME
