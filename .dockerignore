@@ -1,0 +1,12 @@
+# Evita copiar artefatos locais para a imagem (composer instala do zero).
+src/vendor
+src/node_modules
+src/.env
+src/.env.*
+src/storage/logs/*
+src/storage/framework/cache/*
+src/storage/framework/sessions/*
+src/storage/framework/views/*
+**/.git
+**/.github
+docs

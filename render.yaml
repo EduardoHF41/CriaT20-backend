@@ -1,0 +1,41 @@
+# Blueprint do Render. Importe pelo painel: New → Blueprint → conecte este repo.
+# O banco (Neon) é externo: preencha DB_URL com a connection string do Neon.
+services:
+  - type: web
+    name: criat20-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile.prod
+    plan: free
+    region: oregon            # use a mesma região do projeto Neon
+    healthCheckPath: /up
+    envVars:
+      - key: APP_NAME
+        value: CriaT20
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        sync: false           # cole a chave gerada (base64:...)
+      - key: APP_URL
+        sync: false           # ex: https://criat20-backend.onrender.com
+      - key: FRONTEND_URL
+        sync: false           # ex: https://criat20.vercel.app
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: error
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_URL
+        sync: false           # connection string do Neon (com ?sslmode=require)
+      - key: DB_SSLMODE
+        value: require
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: sync
+      - key: FILESYSTEM_DISK
+        value: local

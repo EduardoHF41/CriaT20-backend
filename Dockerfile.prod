@@ -1,0 +1,32 @@
+# Imagem de produção: PHP-FPM + Nginx num único container (para Render free).
+FROM php:8.4-fpm-alpine
+
+# Dependências de sistema + extensões PHP (pdo_pgsql para o Postgres do Neon).
+RUN apk add --no-cache nginx supervisor libpq bash \
+ && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS postgresql-dev \
+ && docker-php-ext-install pdo pdo_pgsql opcache \
+ && apk del .build-deps
+
+# Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+# Copia a aplicação Laravel (que mora em src/) e instala dependências de produção.
+COPY src/ ./
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts \
+ && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
+ && chown -R www-data:www-data storage bootstrap/cache \
+ && chmod -R 775 storage bootstrap/cache
+
+# Nginx + Supervisor + entrypoint
+COPY docker/prod/nginx.conf       /etc/nginx/nginx.conf.template
+COPY docker/prod/supervisord.conf /etc/supervisord.conf
+COPY docker/prod/entrypoint.sh    /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Render injeta a porta via $PORT; usamos 10000 como padrão.
+ENV PORT=10000
+EXPOSE 10000
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
